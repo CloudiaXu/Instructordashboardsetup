@@ -47,53 +47,10 @@ export default function CommunityInbox() {
     <div className="flex flex-col h-screen">
       {/* Header */}
       <div className="bg-white h-[73px] border-b border-neutral-200 shrink-0">
-        <div className="flex items-center justify-between h-full px-6">
-          {/* Left: Title */}
+        <div className="flex items-start h-full px-6 pb-[21px] pt-5">
           <div className="flex flex-col">
             <h1 className="text-[20px] text-gray-900 leading-[28px]">收件匣</h1>
             <p className="text-[14px] text-gray-500 leading-[20px]">客戶訊息管理</p>
-          </div>
-
-          {/* Right: Actions */}
-          <div className="flex items-center gap-4">
-            {/* Notification Button */}
-            <Button variant="ghost" size="sm" className="p-2">
-              <Bell size={20} className="text-gray-600" />
-            </Button>
-
-            {/* Dark Mode Toggle */}
-            <div className="flex items-center">
-              <button
-                onClick={() => setIsDarkMode(!isDarkMode)}
-                className="bg-gray-200 rounded-full w-12 h-6 p-0.5 relative transition-colors"
-              >
-                <div 
-                  className={`bg-white rounded-full size-5 shadow flex items-center justify-center transition-transform ${
-                    isDarkMode ? 'translate-x-6' : 'translate-x-0'
-                  }`}
-                >
-                  {isDarkMode ? (
-                    <Moon size={12} className="text-blue-600" />
-                  ) : (
-                    <Sun size={12} className="text-yellow-500" />
-                  )}
-                </div>
-              </button>
-            </div>
-
-            {/* User Profile */}
-            <div className="flex items-center gap-3 pl-4 border-l border-neutral-200">
-              <div className="size-8 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">C</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-sm font-medium text-gray-900">Cloudia</p>
-                <p className="text-xs text-gray-500">shiau.cloudia@gmail.com</p>
-              </div>
-              <Button variant="ghost" size="sm" className="p-0">
-                <MoreVertical size={16} className="text-gray-500" />
-              </Button>
-            </div>
           </div>
         </div>
       </div>
