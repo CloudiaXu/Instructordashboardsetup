@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
+import KnowledgeBase from './components/KnowledgeBase';
 import CreateAgent from './components/CreateAgent';
 import ConnectCommunity from './components/ConnectCommunity';
 import Reports from './components/Reports';
 import AgentManagement from './components/AgentManagement';
 import CommunityAppsManagement from './components/CommunityAppsManagement';
+import CommunityInbox from './components/CommunityInbox';
 import Sidebar from './components/Sidebar';
 
 export default function App() {
@@ -60,6 +62,54 @@ export default function App() {
       agentId: 1,
       status: 'inactive',
       replyCount: 0,
+    },
+  ]);
+
+  // Knowledge Base state
+  const [links, setLinks] = useState([
+    {
+      id: 1,
+      name: 'Python 初學者課程',
+      type: '線上課程',
+      expiration: '永久',
+      url: 'https://example.com/python-course',
+      status: '啟用',
+    },
+    {
+      id: 2,
+      name: '進階影片剪輯',
+      type: '線上課程',
+      expiration: '6 個月',
+      url: 'https://example.com/video-editing',
+      status: '啟用',
+    },
+  ]);
+
+  const [qas, setQas] = useState([
+    {
+      id: 1,
+      question: '我可以使用多久？',
+      answer: '購買後終身使用。',
+      category: '課程政策',
+      visibility: '公開',
+    },
+    {
+      id: 2,
+      question: '可以退款嗎？',
+      answer: '可以，如果您不滿意，購買後 30 天內可以退款。',
+      category: '付款',
+      visibility: '公開',
+    },
+  ]);
+
+  const [notes, setNotes] = useState([
+    {
+      id: 1,
+      title: '授課的編輯技巧',
+      content: '總是從架構���大綱開始，再深入細節。使用來自真實情境的具體範例...',
+      summary: '總是從架構和大綱開始，再深入細節。使用來自真實情境的具體範例...',
+      lastUpdated: '2025-11-08',
+      usedForTraining: true,
     },
   ]);
 
@@ -121,8 +171,28 @@ export default function App() {
               } 
             />
             <Route 
+              path="/knowledge-base" 
+              element={
+                <KnowledgeBase 
+                  links={links}
+                  setLinks={setLinks}
+                  qas={qas}
+                  setQas={setQas}
+                  notes={notes}
+                  setNotes={setNotes}
+                />
+              } 
+            />
+            <Route 
               path="/create-agent" 
-              element={<CreateAgent addAgent={addAgent} />} 
+              element={
+                <CreateAgent 
+                  addAgent={addAgent}
+                  links={links}
+                  qas={qas}
+                  notes={notes}
+                />
+              } 
             />
             <Route 
               path="/connect-community" 
@@ -155,6 +225,7 @@ export default function App() {
                 />
               } 
             />
+            <Route path="/community-inbox" element={<CommunityInbox />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
