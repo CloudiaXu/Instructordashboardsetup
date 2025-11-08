@@ -5,8 +5,6 @@
 
   export default defineConfig({
     plugins: [react()],
-  // GitHub Pages 專案頁面需要指定 base，否則資源路徑會指向根目錄而 404
-  base: '/Instructordashboardsetup/',
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
@@ -53,8 +51,7 @@
     },
     build: {
       target: 'esnext',
-    // 直接輸出到 docs，方便以 GitHub Pages 的 docs 模式發布
-    outDir: 'docs',
+      outDir: 'build',
     },
     server: {
       port: 3000,

@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Upload, FileText, X, Send, RefreshCw, Save, CheckCircle } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Upload, FileText, X, Send, RefreshCw, Save, CheckCircle, Link2, MessageCircle, FileEdit, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Badge } from './ui/badge';
 import { Progress } from './ui/progress';
+import { Checkbox } from './ui/checkbox';
 
-export default function CreateAgent({ addAgent }) {
+export default function CreateAgent({ addAgent, links = [], qas = [], notes = [] }) {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [agentName, setAgentName] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [selectedKnowledgeItems, setSelectedKnowledgeItems] = useState([]);
   const [chatTexts, setChatTexts] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
   const [currentMessage, setCurrentMessage] = useState('');
@@ -155,11 +157,123 @@ export default function CreateAgent({ addAgent }) {
                   </div>
                 )}
 
+                {/* Select from Knowledge Base */}
+                <div className="border-t pt-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <h4>或從知識庫選擇現有內容</h4>
+                      {selectedKnowledgeItems.length > 0 && (
+                        <Badge style={{ backgroundColor: '#02567F', color: 'white' }}>
+                          已選擇 {selectedKnowledgeItems.length} 項
+                        </Badge>
+                      )}
+                    </div>
+                    <Link to="/knowledge-base">
+                      <Button variant="link" size="sm">
+                        前往知識庫 <ArrowRight size={14} className="ml-1" />
+                      </Button>
+                    </Link>
+                  </div>
+                  
+                  {(links.length > 0 || qas.length > 0 || notes.length > 0) ? (
+                    <div className="space-y-4 max-h-96 overflow-y-auto">
+                      {links.length > 0 && (
+                        <div>
+                          <p className="text-gray-600 mb-2 flex items-center gap-2">
+                            <Link2 size={16} />
+                            Links ({links.length})
+                          </p>
+                          <div className="space-y-2">
+                            {links.slice(0, 3).map((link) => (
+                              <div key={link.id} className="flex items-center gap-3 p-2 bg-blue-50 rounded border border-blue-200">
+                                <Checkbox 
+                                  checked={selectedKnowledgeItems.includes(`link-${link.id}`)}
+                                  onCheckedChange={(checked) => {
+                                    if (checked) {
+                                      setSelectedKnowledgeItems([...selectedKnowledgeItems, `link-${link.id}`]);
+                                    } else {
+                                      setSelectedKnowledgeItems(selectedKnowledgeItems.filter(id => id !== `link-${link.id}`));
+                                    }
+                                  }}
+                                />
+                                <span className="flex-1">{link.name}</span>
+                                <Badge variant="outline">{link.type}</Badge>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {qas.length > 0 && (
+                        <div>
+                          <p className="text-gray-600 mb-2 flex items-center gap-2">
+                            <MessageCircle size={16} />
+                            Q&A Pairs ({qas.length})
+                          </p>
+                          <div className="space-y-2">
+                            {qas.slice(0, 3).map((qa) => (
+                              <div key={qa.id} className="flex items-center gap-3 p-2 bg-green-50 rounded border border-green-200">
+                                <Checkbox 
+                                  checked={selectedKnowledgeItems.includes(`qa-${qa.id}`)}
+                                  onCheckedChange={(checked) => {
+                                    if (checked) {
+                                      setSelectedKnowledgeItems([...selectedKnowledgeItems, `qa-${qa.id}`]);
+                                    } else {
+                                      setSelectedKnowledgeItems(selectedKnowledgeItems.filter(id => id !== `qa-${qa.id}`));
+                                    }
+                                  }}
+                                />
+                                <span className="flex-1">{qa.question}</span>
+                                <Badge variant="outline">{qa.category}</Badge>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {notes.length > 0 && (
+                        <div>
+                          <p className="text-gray-600 mb-2 flex items-center gap-2">
+                            <FileEdit size={16} />
+                            Text Notes ({notes.length})
+                          </p>
+                          <div className="space-y-2">
+                            {notes.slice(0, 3).map((note) => (
+                              <div key={note.id} className="flex items-center gap-3 p-2 bg-purple-50 rounded border border-purple-200">
+                                <Checkbox 
+                                  checked={selectedKnowledgeItems.includes(`note-${note.id}`)}
+                                  onCheckedChange={(checked) => {
+                                    if (checked) {
+                                      setSelectedKnowledgeItems([...selectedKnowledgeItems, `note-${note.id}`]);
+                                    } else {
+                                      setSelectedKnowledgeItems(selectedKnowledgeItems.filter(id => id !== `note-${note.id}`));
+                                    }
+                                  }}
+                                />
+                                <span className="flex-1">{note.title}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-lg">
+                      <p className="text-gray-500 mb-2">知識庫目前是空的</p>
+                      <Link to="/knowledge-base">
+                        <Button variant="link">
+                          前往建立知識內容 <ArrowRight size={14} className="ml-1" />
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
                 <div className="flex justify-end gap-3 pt-4">
                   <Button variant="outline" onClick={() => navigate('/')}>
                     取消
                   </Button>
-                  <Button onClick={() => setStep(2)} disabled={uploadedFiles.length === 0}>
+                  <Button onClick={() => setStep(2)} disabled={uploadedFiles.length === 0 && selectedKnowledgeItems.length === 0}>
                     下一步：學習對話風格
                   </Button>
                 </div>
