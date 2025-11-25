@@ -50,10 +50,10 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
       case 1:
         return (
           <div className="max-w-4xl mx-auto">
-            <Card>
+            <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle>選擇社群平台</CardTitle>
-                <p className="text-gray-600">選擇您要將 AI 助理部署到的平台</p>
+                <CardTitle className="text-white">選擇社群平台</CardTitle>
+                <p className="text-muted-foreground text-sm">選擇您要將 AI 助理部署到的平台</p>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -61,17 +61,17 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
                     <div
                       key={platform.id}
                       onClick={() => handlePlatformSelect(platform.id)}
-                      className="border-2 border-gray-200 rounded-lg p-6 hover:border-indigo-400 hover:shadow-md transition-all cursor-pointer"
+                      className="border-2 border-border rounded-xl p-6 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/20 transition-all cursor-pointer bg-card/50"
                     >
                       <div className="flex items-center gap-4">
-                        <div className={`w-16 h-16 ${platform.color} rounded-lg flex items-center justify-center`}>
+                        <div className="w-16 h-16 rounded-xl flex items-center justify-center bg-muted/50 border border-border">
                           <SocialMediaIcon platform={platform.id} size={32} />
                         </div>
                         <div className="flex-1">
-                          <h3>{platform.name}</h3>
-                          <p className="text-gray-600">連結並部署 AI 助理</p>
+                          <h3 className="text-white font-semibold text-lg">{platform.name}</h3>
+                          <p className="text-muted-foreground text-sm">連結並部署 AI 助理</p>
                         </div>
-                        <ArrowRight className="text-gray-400" />
+                        <ArrowRight className="text-purple-400" />
                       </div>
                     </div>
                   ))}
@@ -84,10 +84,10 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
       case 2:
         return (
           <div className="max-w-3xl mx-auto">
-            <Card>
+            <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle>平台授權與設定 - {selectedPlatform}</CardTitle>
-                <p className="text-gray-600">
+                <CardTitle className="text-white mb-2">平台授權與設定 - {selectedPlatform}</CardTitle>
+                <p className="text-muted-foreground text-sm">
                   {selectedPlatform === 'LINE' && '請至 LINE Developer 後台，複製您的 Channel Access Token 和 Channel Secret'}
                   {selectedPlatform === 'Facebook Messenger' && '請至 Facebook Developer 後台取得 Page Access Token'}
                   {selectedPlatform === 'Instagram' && '請至 Instagram Business 後台取得 Access Token'}
@@ -95,9 +95,9 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
                 </p>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h4 className="text-blue-900 mb-2">設定步驟說明</h4>
-                  <ol className="list-decimal list-inside space-y-1 text-blue-800">
+                <div className="bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-500/30 rounded-xl p-4">
+                  <h4 className="text-blue-400 mb-3 font-semibold">設定步驟說明</h4>
+                  <ol className="list-decimal list-inside space-y-2 text-blue-300 text-sm">
                     <li>前往 {selectedPlatform} Developer 後台</li>
                     <li>建立或選擇您的應用程式/頻道</li>
                     <li>複製 API 金鑰與密鑰</li>
@@ -106,8 +106,8 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
                 </div>
 
                 <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="token">
+                  <div className="space-y-2">
+                    <Label htmlFor="token" className="text-white text-sm">
                       {selectedPlatform === 'LINE' ? 'Channel Access Token' : 'Access Token'}
                     </Label>
                     <Input
@@ -115,41 +115,42 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
                       placeholder="貼上您的 Access Token"
                       value={channelAccessToken}
                       onChange={(e) => setChannelAccessToken(e.target.value)}
-                      className="font-mono"
+                      className="font-mono bg-input-background border-border text-white placeholder:text-muted-foreground"
                     />
                   </div>
 
                   {selectedPlatform === 'LINE' && (
-                    <div>
-                      <Label htmlFor="secret">Channel Secret</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="secret" className="text-white text-sm">Channel Secret</Label>
                       <Input
                         id="secret"
                         placeholder="貼上您的 Channel Secret"
                         value={channelSecret}
                         onChange={(e) => setChannelSecret(e.target.value)}
-                        className="font-mono"
+                        className="font-mono bg-input-background border-border text-white placeholder:text-muted-foreground"
                       />
                     </div>
                   )}
 
-                  <div>
-                    <Label htmlFor="webhook">Webhook URL（請複製到平台設定中）</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="webhook" className="text-white text-sm">Webhook URL（請複製到平台設定中）</Label>
                     <Input
                       id="webhook"
                       value={`https://api.your-platform.com/webhook/${selectedPlatform.toLowerCase().replace(' ', '-')}`}
                       readOnly
-                      className="bg-gray-50"
+                      className="bg-muted border-border text-muted-foreground"
                     />
                   </div>
                 </div>
 
-                <div className="flex justify-between pt-4">
-                  <Button variant="outline" onClick={() => setStep(1)}>
+                <div className="flex justify-between pt-6 border-t border-border">
+                  <Button variant="outline" onClick={() => setStep(1)} className="border-border text-muted-foreground hover:text-white hover:bg-muted">
                     返回選擇平台
                   </Button>
                   <Button 
                     onClick={handleSaveSettings}
                     disabled={!channelAccessToken || (selectedPlatform === 'LINE' && !channelSecret)}
+                    className="bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white shadow-lg shadow-purple-500/50"
                   >
                     儲存並繼續
                   </Button>
@@ -162,21 +163,21 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
       case 3:
         return (
           <div className="max-w-3xl mx-auto">
-            <Card>
+            <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle>指派 AI 助理</CardTitle>
-                <p className="text-gray-600">選擇要部署到 {selectedPlatform} 的 AI 助理</p>
+                <CardTitle className="text-white">指派 AI 助理</CardTitle>
+                <p className="text-muted-foreground">選擇要部署到 {selectedPlatform} 的 AI 助理</p>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label htmlFor="agent">選擇 AI 助理</Label>
+                  <Label htmlFor="agent" className="text-white">選擇 AI 助理</Label>
                   <Select value={selectedAgent} onValueChange={setSelectedAgent}>
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-input-background border-border text-white">
                       <SelectValue placeholder="請選擇一個 AI 助理" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-card border-border">
                       {agents.filter(a => a.status === 'active').map((agent) => (
-                        <SelectItem key={agent.id} value={agent.id.toString()}>
+                        <SelectItem key={agent.id} value={agent.id.toString()} className="text-white">
                           {agent.name} (回覆率: {agent.autoReplyRate}%)
                         </SelectItem>
                       ))}
@@ -185,9 +186,9 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
                 </div>
 
                 {selectedAgent && (
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <h4 className="text-green-900 mb-2">確認部署資訊</h4>
-                    <div className="space-y-2 text-green-800">
+                  <div className="bg-gradient-to-br from-green-500/20 to-green-600/10 border border-green-500/30 rounded-xl p-4">
+                    <h4 className="text-green-400 mb-2 font-semibold">確認部署資訊</h4>
+                    <div className="space-y-2 text-green-300">
                       <p>• 平台：{selectedPlatform}</p>
                       <p>• AI 助理：{agents.find(a => a.id === parseInt(selectedAgent))?.name}</p>
                       <p>• 狀態：準備啟用</p>
@@ -196,13 +197,13 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
                 )}
 
                 <div className="flex justify-between pt-4">
-                  <Button variant="outline" onClick={() => setStep(2)}>
+                  <Button variant="outline" onClick={() => setStep(2)} className="border-border text-muted-foreground hover:text-white hover:bg-muted">
                     上一步
                   </Button>
                   <Button 
                     onClick={handleActivate}
                     disabled={!selectedAgent}
-                    className="bg-green-600 hover:bg-green-700"
+                    className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white shadow-lg shadow-green-500/50"
                   >
                     <CheckCircle size={16} className="mr-2" />
                     確認啟用
@@ -219,25 +220,27 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-8 bg-background">
       <div className="mb-8">
-        <h1>連結社群應用</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">連結社群應用</h1>
         <div className="flex items-center gap-4 mt-4">
           {[1, 2, 3].map((s) => (
             <div key={s} className="flex items-center gap-2">
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  step >= s ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-600'
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                  step >= s 
+                    ? 'bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg shadow-green-500/50' 
+                    : 'bg-muted text-muted-foreground'
                 }`}
               >
                 {s}
               </div>
-              <span className={step >= s ? 'text-green-600' : 'text-gray-600'}>
+              <span className={step >= s ? 'text-green-400 font-medium' : 'text-muted-foreground'}>
                 {s === 1 && '選擇平台'}
                 {s === 2 && '授權設定'}
                 {s === 3 && '指派助理'}
               </span>
-              {s < 3 && <div className="w-12 h-0.5 bg-gray-300" />}
+              {s < 3 && <div className={`w-12 h-0.5 ${step > s ? 'bg-green-500' : 'bg-border'}`} />}
             </div>
           ))}
         </div>

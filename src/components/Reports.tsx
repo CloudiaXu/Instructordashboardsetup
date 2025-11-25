@@ -63,24 +63,24 @@ export default function Reports({ agents, communityApps }) {
   const avgResponseTime = '2.3';
 
   return (
-    <div className="p-8">
+    <div className="p-8 bg-background">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1>數據報告</h1>
-          <p className="text-gray-600">將後台數據轉化為有價值的商業洞察</p>
+          <h1 className="text-3xl font-bold text-white mb-2">數據報告</h1>
+          <p className="text-muted-foreground text-base">將後台數據轉化為有價值的商業洞察</p>
         </div>
         <div className="flex items-center gap-3">
           <Select value={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger className="w-40">
+            <SelectTrigger className="w-40 bg-input-background border-border text-white">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="7">過去 7 天</SelectItem>
-              <SelectItem value="30">過去 30 天</SelectItem>
-              <SelectItem value="90">過去 90 天</SelectItem>
+            <SelectContent className="bg-card border-border">
+              <SelectItem value="7" className="text-white">過去 7 天</SelectItem>
+              <SelectItem value="30" className="text-white">過去 30 天</SelectItem>
+              <SelectItem value="90" className="text-white">過去 90 天</SelectItem>
             </SelectContent>
           </Select>
-          <Button variant="outline">
+          <Button className="bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white shadow-lg shadow-purple-500/50">
             <Download size={16} className="mr-2" />
             匯出報告
           </Button>
@@ -89,62 +89,67 @@ export default function Reports({ agents, communityApps }) {
 
       {/* Core Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card>
+        <Card className="bg-card border-border">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-gray-600">回覆學員總數</CardTitle>
-            <Users className="text-indigo-600" size={20} />
+            <CardTitle className="text-muted-foreground">回覆學員總數</CardTitle>
+            <Users className="text-purple-500" size={20} />
           </CardHeader>
           <CardContent>
-            <div className="text-indigo-600">{totalReplies}</div>
-            <p className="text-gray-500 mt-1">
-              <TrendingUp size={14} className="inline mr-1" />
-              比上週增加 18%
+            <div className="text-3xl font-bold text-purple-500">{totalReplies}</div>
+            <p className="text-muted-foreground mt-1">
+              <TrendingUp size={14} className="inline mr-1 text-purple-400" />
+              <span className="text-purple-400">比上週增加 18%</span>
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-card border-border">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-gray-600">平均回覆時間</CardTitle>
-            <Clock className="text-green-600" size={20} />
+            <CardTitle className="text-muted-foreground">平均回覆時間</CardTitle>
+            <Clock className="text-purple-500" size={20} />
           </CardHeader>
           <CardContent>
-            <div className="text-green-600">{avgResponseTime} 分鐘</div>
-            <p className="text-gray-500 mt-1">比上週快 25%</p>
+            <div className="text-3xl font-bold text-purple-500">{avgResponseTime} 分鐘</div>
+            <p className="text-muted-foreground mt-1">
+              <TrendingUp size={14} className="inline mr-1 text-purple-400" />
+              <span className="text-purple-400">比上週快 25%</span>
+            </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-card border-border">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-gray-600">問題總數</CardTitle>
-            <TrendingUp className="text-yellow-600" size={20} />
+            <CardTitle className="text-muted-foreground">問題總數</CardTitle>
+            <TrendingUp className="text-yellow-500" size={20} />
           </CardHeader>
           <CardContent>
-            <div className="text-yellow-600">487</div>
-            <p className="text-gray-500 mt-1">本週累積</p>
+            <div className="text-3xl font-bold text-yellow-500">487</div>
+            <p className="text-muted-foreground mt-1">本週累積</p>
           </CardContent>
         </Card>
       </div>
 
       {/* AI Insights */}
-      <Card className="mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
+      <Card className="mb-8 bg-gradient-to-r from-purple-500/20 to-yellow-500/20 border-purple-500/30">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Lightbulb className="text-indigo-600" size={24} />
-            <CardTitle className="text-indigo-900">AI 智能洞察與建議</CardTitle>
+            <Lightbulb className="text-yellow-400" size={24} />
+            <CardTitle className="text-white">AI 智能洞察與建議</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {insights.map((insight, idx) => (
-              <div key={idx} className="bg-white rounded-lg p-4 border border-indigo-100">
+              <div key={idx} className="bg-card/80 rounded-xl p-4 border border-border backdrop-blur-sm">
                 <div className="flex items-start gap-3">
-                  <div className={`w-2 h-2 rounded-full mt-2 ${
-                    insight.impact === 'high' ? 'bg-red-500' : 'bg-yellow-500'
+                  <div className={`w-3 h-3 rounded-full mt-2 shadow-lg ${
+                    insight.impact === 'high' 
+                      ? 'bg-red-500 shadow-red-500/50' 
+                      : 'bg-yellow-500 shadow-yellow-500/50'
                   }`} />
                   <div className="flex-1">
-                    <h4 className="text-indigo-900">{insight.title}</h4>
-                    <p className="text-gray-700 mt-1">{insight.description}</p>
+                    <h4 className="text-white font-semibold mb-1">{insight.title}</h4>
+                    <p className="text-muted-foreground text-sm">{insight.description}</p>
                   </div>
                 </div>
               </div>
@@ -155,10 +160,10 @@ export default function Reports({ agents, communityApps }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Question Categories */}
-        <Card>
+        <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle>問題分類統計</CardTitle>
-            <p className="text-gray-600">點擊圖表區塊查看該分類的熱門問題</p>
+            <CardTitle className="text-white">問題分類統計</CardTitle>
+            <p className="text-muted-foreground text-sm">點擊圖表區塊查看該分類的熱門問題</p>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -182,12 +187,12 @@ export default function Reports({ agents, communityApps }) {
             </ResponsiveContainer>
             <div className="mt-4 space-y-2">
               {questionCategoryData.slice(0, 3).map((cat, idx) => (
-                <div key={idx} className="flex items-center justify-between text-gray-700">
+                <div key={idx} className="flex items-center justify-between text-white">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full" style={{ backgroundColor: cat.color }} />
                     <span>{cat.name}</span>
                   </div>
-                  <span>{cat.value} 次</span>
+                  <span className="text-muted-foreground">{cat.value} 次</span>
                 </div>
               ))}
             </div>
@@ -195,10 +200,10 @@ export default function Reports({ agents, communityApps }) {
         </Card>
 
         {/* Platform Activity */}
-        <Card>
+        <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle>平台活躍度比較</CardTitle>
-            <p className="text-gray-600">了解學員在哪個平台最活躍</p>
+            <CardTitle className="text-white">平台活躍度比較</CardTitle>
+            <p className="text-muted-foreground text-sm">了解學員在哪個平台最活躍</p>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -216,10 +221,10 @@ export default function Reports({ agents, communityApps }) {
       </div>
 
       {/* Trend Chart */}
-      <Card className="mb-8">
+      <Card className="mb-8 bg-card border-border">
         <CardHeader>
-          <CardTitle>問題與回覆趨勢</CardTitle>
-          <p className="text-gray-600">追蹤每日問題數量與回覆率變化</p>
+          <CardTitle className="text-white">問題與回覆趨勢</CardTitle>
+          <p className="text-muted-foreground text-sm">追蹤每日問題數量與回覆率變化</p>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
@@ -237,23 +242,23 @@ export default function Reports({ agents, communityApps }) {
       </Card>
 
       {/* Top Questions */}
-      <Card>
+      <Card className="bg-card border-border">
         <CardHeader>
-          <CardTitle>熱門問題排行</CardTitle>
-          <p className="text-gray-600">最常被詢問的問題</p>
+          <CardTitle className="text-white">熱門問題排行</CardTitle>
+          <p className="text-muted-foreground text-sm">最常被詢問的問題</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             {topQuestions.map((q, idx) => (
-              <div key={idx} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:border-indigo-300 transition-colors">
-                <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center flex-shrink-0">
+              <div key={idx} className="flex items-center gap-4 p-4 border border-border rounded-xl hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all bg-card/50">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 text-white flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/30">
                   {idx + 1}
                 </div>
                 <div className="flex-1">
-                  <p>{q.question}</p>
-                  <p className="text-gray-500">{q.category}</p>
+                  <p className="text-white font-medium">{q.question}</p>
+                  <p className="text-muted-foreground text-sm">{q.category}</p>
                 </div>
-                <div className="text-indigo-600">
+                <div className="text-purple-400 font-semibold">
                   {q.count} 次
                 </div>
               </div>

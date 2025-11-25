@@ -15,9 +15,17 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 p-6">
+    <div className="fixed left-0 top-0 h-screen w-64 bg-sidebar border-r border-sidebar-border p-6">
       <div className="mb-8">
-        <h1 style={{ color: '#02567F' }}>ELEMI</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-yellow-500 bg-clip-text text-transparent leading-none">
+            ELEMI
+          </h1>
+          <div className="flex flex-col items-start justify-center h-[1.5rem]">
+            <span className="text-xs font-normal text-sidebar-foreground leading-none">Assistant</span>
+            <span className="text-xs font-normal text-sidebar-foreground leading-none">Manager</span>
+          </div>
+        </div>
       </div>
       
       <nav className="space-y-2">
@@ -29,11 +37,11 @@ export default function Sidebar() {
             <Link
               key={item.path}
               to={item.path}
-              className="flex items-center gap-3 px-4 py-3 rounded-2xl transition-colors text-gray-700 hover:bg-gray-50"
-              style={isActive ? { 
-                backgroundColor: '#D4EAF0',
-                color: '#02567F'
-              } : undefined}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                isActive 
+                  ? 'bg-gradient-to-r from-purple-600/30 to-purple-500/20 text-white border border-purple-500/50 shadow-lg shadow-purple-500/20' 
+                  : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-white'
+              }`}
             >
               <Icon size={20} />
               <span>{item.label}</span>

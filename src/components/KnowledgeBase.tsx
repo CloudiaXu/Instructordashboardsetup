@@ -156,8 +156,8 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
     <div className="p-8">
       {/* Page Header */}
       <div className="mb-8">
-        <h1>我的知識庫</h1>
-        <p className="text-gray-600">管理您的教材、常見問題和筆記，為您的 AI 助理提供知識支持。</p>
+        <h1 className="text-3xl font-bold text-white mb-2">我的知識庫</h1>
+        <p className="text-[14px] text-muted-foreground leading-[20px]">管理您的教材、常見問題和筆記，為您的 AI 助理提供知識支持。</p>
       </div>
 
       {/* Search and Action Bar */}
@@ -384,7 +384,7 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>課程與推廣連結</CardTitle>
-                  <p className="text-gray-600 mt-1">管理學生存取課程和資源的連結</p>
+                  <p className="text-muted-foreground text-sm mt-1">管理學生存取課程和資源的連結</p>
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm">
@@ -604,14 +604,14 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
       </Tabs>
 
       {/* Sync CTA */}
-      <Card className="mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+      <Card className="mt-6 bg-gradient-to-r from-purple-500/20 to-yellow-500/20 border-purple-500/30">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-blue-900">準備好更新您的 AI 助理了嗎？</h3>
-              <p className="text-blue-700 mt-1">一鍵同步所有變更到您連結的 AI 代理</p>
+              <h3 className="text-white font-semibold text-lg mb-1">準備好更新您的 AI 助理了嗎？</h3>
+              <p className="text-muted-foreground text-sm">一鍵同步所有變更到您連結的 AI 代理</p>
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700">
+            <Button className="bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white shadow-lg shadow-purple-500/50">
               <Upload size={16} className="mr-2" />
               同步到 AI 助理
             </Button>
