@@ -17,7 +17,7 @@ export default function Sidebar() {
   return (
     <div className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 p-6">
       <div className="mb-8">
-        <h1 style={{ color: '#02567F' }}>AI 講師助理平台</h1>
+        <h1 style={{ color: '#02567F' }}>ELEMI</h1>
       </div>
       
       <nav className="space-y-2">

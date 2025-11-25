@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Switch } from './ui/switch';
+import SocialMediaIcon from './SocialMediaIcon';
 
 export default function Dashboard({ agents, communityApps, updateCommunityApp }) {
   const totalReplies = agents.reduce((sum, agent) => sum + agent.replyCount, 0);
@@ -12,13 +13,6 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
   const avgAutoReplyRate = agents.length > 0 
     ? Math.round(agents.reduce((sum, agent) => sum + agent.autoReplyRate, 0) / agents.length)
     : 0;
-
-  const platformIcons = {
-    'LINE': '💬',
-    'Facebook Messenger': '💙',
-    'Instagram': '📷',
-    'Discord': '🎮',
-  };
 
   return (
     <div className="p-8">
@@ -156,7 +150,7 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
                 <div key={app.id} className="p-4 border border-gray-200 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">{platformIcons[app.platform]}</span>
+                      <SocialMediaIcon platform={app.platform} size={24} />
                       <h4>{app.platform}</h4>
                     </div>
                     <Switch

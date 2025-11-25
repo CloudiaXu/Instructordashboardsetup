@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import SocialMediaIcon from './SocialMediaIcon';
 
 export default function ConnectCommunity({ agents, addCommunityApp }) {
   const navigate = useNavigate();
@@ -16,10 +17,10 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
   const [selectedAgent, setSelectedAgent] = useState('');
 
   const platforms = [
-    { id: 'LINE', name: 'LINE', icon: '💬', color: 'bg-green-500' },
-    { id: 'Facebook Messenger', name: 'Facebook Messenger', icon: '💙', color: 'bg-blue-500' },
-    { id: 'Instagram', name: 'Instagram', icon: '📷', color: 'bg-pink-500' },
-    { id: 'Discord', name: 'Discord', icon: '🎮', color: 'bg-indigo-500' },
+    { id: 'LINE', name: 'LINE', color: 'bg-green-500' },
+    { id: 'Facebook Messenger', name: 'Facebook Messenger', color: 'bg-blue-500' },
+    { id: 'Instagram', name: 'Instagram', color: 'bg-pink-500' },
+    { id: 'Discord', name: 'Discord', color: 'bg-indigo-500' },
   ];
 
   const handlePlatformSelect = (platformId) => {
@@ -63,8 +64,8 @@ export default function ConnectCommunity({ agents, addCommunityApp }) {
                       className="border-2 border-gray-200 rounded-lg p-6 hover:border-indigo-400 hover:shadow-md transition-all cursor-pointer"
                     >
                       <div className="flex items-center gap-4">
-                        <div className={`w-16 h-16 ${platform.color} rounded-lg flex items-center justify-center text-3xl`}>
-                          {platform.icon}
+                        <div className={`w-16 h-16 ${platform.color} rounded-lg flex items-center justify-center`}>
+                          <SocialMediaIcon platform={platform.id} size={32} />
                         </div>
                         <div className="flex-1">
                           <h3>{platform.name}</h3>

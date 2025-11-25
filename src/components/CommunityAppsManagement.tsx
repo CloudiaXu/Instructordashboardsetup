@@ -17,6 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from './ui/alert-dialog';
+import SocialMediaIcon from './SocialMediaIcon';
 
 export default function CommunityAppsManagement({ 
   communityApps, 
@@ -24,12 +25,6 @@ export default function CommunityAppsManagement({
   updateCommunityApp, 
   deleteCommunityApp 
 }) {
-  const platformIcons = {
-    'LINE': '💬',
-    'Facebook Messenger': '💙',
-    'Instagram': '📷',
-    'Discord': '🎮',
-  };
 
   const handleToggleStatus = (id, currentStatus) => {
     updateCommunityApp(id, { status: currentStatus === 'active' ? 'inactive' : 'active' });
@@ -81,8 +76,8 @@ export default function CommunityAppsManagement({
               <CardContent className="p-6">
                 <div className="flex items-start gap-6">
                   {/* Platform Icon */}
-                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-3xl flex-shrink-0">
-                    {platformIcons[app.platform]}
+                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <SocialMediaIcon platform={app.platform} size={32} />
                   </div>
 
                   {/* Main Content */}
