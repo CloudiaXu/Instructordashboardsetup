@@ -28,6 +28,44 @@ export default function CommunityInbox() {
   const [usageCount, setUsageCount] = useState(45);
   const [usageLimit] = useState(100);
 
+  // Get platform badge colors and styles
+  const getPlatformBadgeStyle = (platform: string) => {
+    const platformLower = platform.toLowerCase();
+    
+    if (platformLower.includes('line')) {
+      return {
+        className: 'border-green-500 text-green-400 bg-green-500/20 hover:bg-green-500/30',
+        style: { borderColor: '#22c55e', color: '#4ade80', backgroundColor: 'rgba(34, 197, 94, 0.2)' }
+      };
+    } else if (platformLower.includes('facebook') || platformLower.includes('messenger')) {
+      return {
+        className: 'border-blue-500 text-blue-400 bg-blue-500/20 hover:bg-blue-500/30',
+        style: { borderColor: '#3b82f6', color: '#60a5fa', backgroundColor: 'rgba(59, 130, 246, 0.2)' }
+      };
+    } else if (platformLower.includes('instagram')) {
+      return {
+        className: 'border-pink-500 text-pink-400 bg-pink-500/20 hover:bg-pink-500/30',
+        style: { borderColor: '#ec4899', color: '#f472b6', backgroundColor: 'rgba(236, 72, 153, 0.2)' }
+      };
+    } else if (platformLower.includes('discord')) {
+      return {
+        className: 'border-indigo-500 text-indigo-400 bg-indigo-500/20 hover:bg-indigo-500/30',
+        style: { borderColor: '#6366f1', color: '#818cf8', backgroundColor: 'rgba(99, 102, 241, 0.2)' }
+      };
+    } else if (platformLower.includes('telegram')) {
+      return {
+        className: 'border-cyan-500 text-cyan-400 bg-cyan-500/20 hover:bg-cyan-500/30',
+        style: { borderColor: '#06b6d4', color: '#22d3ee', backgroundColor: 'rgba(6, 182, 212, 0.2)' }
+      };
+    } else {
+      // Default color for other platforms
+      return {
+        className: 'border-border text-muted-foreground bg-muted/50',
+        style: {}
+      };
+    }
+  };
+
   // Mock conversations data
   const [conversations] = useState<Conversation[]>([
     {
@@ -249,7 +287,17 @@ export default function CommunityInbox() {
                         </div>
                         <p className="text-sm text-muted-foreground truncate">{conv.lastMessage}</p>
                         <div className="flex items-center gap-2 mt-2">
-                          <Badge variant="outline" className="text-xs border-border text-muted-foreground">{conv.platform}</Badge>
+                          {(() => {
+                            const badgeStyle = getPlatformBadgeStyle(conv.platform);
+                            return (
+                              <span 
+                                className={`inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 ${badgeStyle.className}`}
+                                style={badgeStyle.style}
+                              >
+                                {conv.platform}
+                              </span>
+                            );
+                          })()}
                           {conv.tag && <Badge variant="secondary" className="text-xs bg-purple-500/20 text-purple-400 border-purple-500/50">{conv.tag}</Badge>}
                         </div>
                       </div>
@@ -322,8 +370,53 @@ export default function CommunityInbox() {
                         },
                         {
                           type: 'ai',
-                          text: '收到！我已經為您查詢到訂單資訊。您的訂單符合退費條件，退費金額將在 3-5 個工作天內退回到您的原付款帳戶。\n\n退費流程已啟動，您會收到確認郵件。如有任何問題，隨時告訴我！',
+                          text: '收到！讓我為您查詢訂單資訊...',
+                          time: '10:28',
+                        },
+                        {
+                          type: 'ai',
+                          text: '我已經查詢到您的訂單資訊：\n\n📋 訂單編號：ORD-2024-1028-001\n📅 購買日期：2024-10-15\n📚 課程名稱：Python 初學者課程\n💰 購買金額：NT$ 4,900\n📊 課程進度：約 35%\n\n✅ 您的訂單符合退費條件！',
+                          time: '10:29',
+                        },
+                        {
+                          type: 'user',
+                          text: '太好了！那退費大概需要多久時間？會退到哪裡？',
                           time: '10:30',
+                        },
+                        {
+                          type: 'ai',
+                          text: '退費金額將在 3-5 個工作天內退回到您的原付款帳戶。\n\n根據您的付款方式（信用卡），退款會直接退回到您當初使用的信用卡帳戶。您會在 1-2 個工作天內收到銀行的退款通知。',
+                          time: '10:30',
+                        },
+                        {
+                          type: 'user',
+                          text: '了解，那退費後我還能繼續看課程嗎？',
+                          time: '10:31',
+                        },
+                        {
+                          type: 'ai',
+                          text: '一旦退費申請通過並處理完成，您的課程存取權限將會被取消。如果您還想繼續學習，建議您可以先保留課程，或者等退費完成後再重新購買。\n\n不過，如果您只是對某些部分不滿意，我們也可以協助您找到更適合的課程內容。您覺得如何呢？',
+                          time: '10:32',
+                        },
+                        {
+                          type: 'user',
+                          text: '我還是想退費，因為課程內容跟我想的不太一樣。那就麻煩您幫我處理退費了。',
+                          time: '10:33',
+                        },
+                        {
+                          type: 'ai',
+                          text: '沒問題！我理解您的決定。退費流程已啟動，您會收到確認郵件。\n\n📧 確認郵件將發送到您註冊時使用的信箱\n⏰ 退費處理時間：3-5 個工作天\n💳 退款方式：原付款帳戶\n\n感謝您的回饋，我們會持續改進課程內容。如有任何問題，隨時告訴我！',
+                          time: '10:34',
+                        },
+                        {
+                          type: 'user',
+                          text: '謝謝您的協助！',
+                          time: '10:35',
+                        },
+                        {
+                          type: 'ai',
+                          text: '不客氣！很高興能協助您。祝您學習順利，如果之後有需要，歡迎隨時回來！😊',
+                          time: '10:35',
                         },
                       ];
                     } else if (conv.lastMessage.includes('報名')) {

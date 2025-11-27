@@ -56,6 +56,34 @@ export default function CommunityAppsManagement({
         </Link>
       </div>
 
+      {communityApps.length > 0 && (
+        <Card className="mb-8 bg-card border-border">
+          <CardHeader>
+            <CardTitle className="text-white">總計統計</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center p-4 bg-gradient-to-br from-purple-500/20 to-purple-600/10 rounded-xl border border-purple-500/30">
+                <p className="text-muted-foreground mb-2">已連結平台</p>
+                <p className="text-purple-400 text-2xl font-bold">{communityApps.length}</p>
+              </div>
+              <div className="text-center p-4 bg-gradient-to-br from-green-500/20 to-green-600/10 rounded-xl border border-green-500/30">
+                <p className="text-muted-foreground mb-2">啟用中平台</p>
+                <p className="text-green-400 text-2xl font-bold">
+                  {communityApps.filter(app => app.status === 'active').length}
+                </p>
+              </div>
+              <div className="text-center p-4 bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 rounded-xl border border-yellow-500/30">
+                <p className="text-muted-foreground mb-2">總回覆次數</p>
+                <p className="text-yellow-400 text-2xl font-bold">
+                  {communityApps.reduce((sum, app) => sum + app.replyCount, 0)}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {communityApps.length === 0 ? (
         <Card className="border-2 border-dashed border-purple-500/50 bg-gradient-to-br from-purple-500/10 to-purple-600/5">
           <CardContent className="text-center py-16">
@@ -179,34 +207,6 @@ export default function CommunityAppsManagement({
             </Card>
           ))}
         </div>
-      )}
-
-      {communityApps.length > 0 && (
-        <Card className="mt-8 bg-card border-border">
-          <CardHeader>
-            <CardTitle className="text-white">總計統計</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center p-4 bg-gradient-to-br from-purple-500/20 to-purple-600/10 rounded-xl border border-purple-500/30">
-                <p className="text-muted-foreground mb-2">已連結平台</p>
-                <p className="text-purple-400 text-2xl font-bold">{communityApps.length}</p>
-              </div>
-              <div className="text-center p-4 bg-gradient-to-br from-green-500/20 to-green-600/10 rounded-xl border border-green-500/30">
-                <p className="text-muted-foreground mb-2">啟用中平台</p>
-                <p className="text-green-400 text-2xl font-bold">
-                  {communityApps.filter(app => app.status === 'active').length}
-                </p>
-              </div>
-              <div className="text-center p-4 bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 rounded-xl border border-yellow-500/30">
-                <p className="text-muted-foreground mb-2">總回覆次數</p>
-                <p className="text-yellow-400 text-2xl font-bold">
-                  {communityApps.reduce((sum, app) => sum + app.replyCount, 0)}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       )}
     </div>
   );

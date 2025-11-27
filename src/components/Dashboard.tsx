@@ -341,136 +341,63 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
       </div>
 
       {/* ┌────────── Table / 詳細資料區 ─────────┐ */}
-      <Card className="mb-6 bg-card border-border">
-        <CardHeader className="px-4 pt-4 pb-2">
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="text-white text-sm mb-0.5">最新活動紀錄</CardTitle>
-              <p className="text-muted-foreground text-xs">用戶操作與活動追蹤</p>
-            </div>
-            <Clock className="text-purple-400" size={20} />
-          </div>
-        </CardHeader>
-        <CardContent className="px-4 pb-4">
-          <div className="rounded-lg border border-border overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="text-muted-foreground font-semibold text-xs py-2">用戶</TableHead>
-                  <TableHead className="text-muted-foreground font-semibold text-xs py-2">操作</TableHead>
-                  <TableHead className="text-muted-foreground font-semibold text-xs py-2">分類</TableHead>
-                  <TableHead className="text-muted-foreground font-semibold text-xs py-2">時間</TableHead>
-                  <TableHead className="text-muted-foreground font-semibold text-xs py-2 text-right">狀態</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {recentActivities.map((activity) => (
-                  <TableRow key={activity.id} className="hover:bg-muted/20">
-                    <TableCell className="font-medium text-white text-sm py-2">{activity.user}</TableCell>
-                    <TableCell className="text-muted-foreground text-sm py-2">{activity.action}</TableCell>
-                    <TableCell className="py-2">
-                      <Badge 
-                        variant="outline" 
-                        className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-xs"
-                      >
-                        {activity.category}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-muted-foreground flex items-center gap-2 text-sm py-2">
-                      <Clock size={12} />
-                      {activity.time}
-                    </TableCell>
-                    <TableCell className="text-right py-2">
-                      <Badge 
-                        variant={activity.status === 'completed' ? 'default' : 'secondary'}
-                        className={
-                          activity.status === 'completed' 
-                            ? 'bg-green-500/20 text-green-400 border-green-500/50 text-xs' 
-                            : 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50 text-xs'
-                        }
-                      >
-                        {activity.status === 'completed' ? '已完成' : '處理中'}
-                      </Badge>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <Link to="/create-agent">
-          <Card className="hover:shadow-lg hover:shadow-purple-500/20 transition-all cursor-pointer border-2 border-dashed border-purple-500/50 bg-gradient-to-br from-purple-500/10 to-purple-600/5">
-            <CardContent className="flex items-center gap-3 p-4">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/50">
-                <Plus className="text-white" size={20} />
-              </div>
-              <div>
-                <h3 className="text-purple-400 font-semibold text-sm">建立新的 AI 助理</h3>
-                <p className="text-muted-foreground text-xs">上傳知識庫，訓練您專屬的 AI</p>
-              </div>
-              <ChevronRight className="ml-auto text-purple-400" size={18} />
-            </CardContent>
-          </Card>
-        </Link>
-
-        <Link to="/connect-community">
-          <Card className="hover:shadow-lg hover:shadow-purple-500/20 transition-all cursor-pointer border-2 border-dashed border-purple-500/50 bg-gradient-to-br from-purple-500/10 to-purple-600/5">
-            <CardContent className="flex items-center gap-3 p-4">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/50">
-                <Plus className="text-white" size={20} />
-              </div>
-              <div>
-                <h3 className="text-purple-400 font-semibold text-sm">連結新的社群 App</h3>
-                <p className="text-muted-foreground text-xs">將 AI 部署到 LINE、FB 等平台</p>
-              </div>
-              <ChevronRight className="ml-auto text-purple-400" size={18} />
-            </CardContent>
-          </Card>
-        </Link>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* AI Agent List */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+        {/* 最新活動紀錄 */}
         <Card className="bg-card border-border">
           <CardHeader className="px-4 pt-4 pb-2">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-white text-sm">AI 助理列表</CardTitle>
-              <Link to="/agents">
-                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-white h-7 text-xs">
-                  查看全部 <ChevronRight size={14} />
-                </Button>
-              </Link>
+              <div>
+                <CardTitle className="text-white text-sm mb-0.5">最新活動紀錄</CardTitle>
+                <p className="text-muted-foreground text-xs">用戶操作與活動追蹤</p>
+              </div>
+              <Clock className="text-purple-400" size={20} />
             </div>
           </CardHeader>
           <CardContent className="px-4 pb-4">
-            <div className="space-y-2">
-              {agents.map((agent) => (
-                <Link key={agent.id} to="/agents">
-                  <div className="p-3 border border-border rounded-lg hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all cursor-pointer bg-card/50">
-                    <div className="flex items-center justify-between mb-1">
-                      <h4 className="text-white font-medium text-sm">{agent.name}</h4>
-                      <Badge 
-                        variant={agent.status === 'active' ? 'default' : 'secondary'}
-                        className={agent.status === 'active' ? 'bg-green-500/20 text-green-400 border-green-500/50 text-xs' : 'bg-muted text-muted-foreground text-xs'}
-                      >
-                        {agent.status === 'active' ? '啟用中' : '已停用'}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-3 text-muted-foreground text-xs">
-                      <span className="flex items-center gap-1">
-                        <Circle size={6} className={agent.status === 'active' ? 'fill-green-500 text-green-500' : 'fill-gray-500 text-gray-500'} />
-                        <span className="text-white">回覆 <span className="text-purple-400 font-semibold">{agent.replyCount}</span> 次</span>
-                      </span>
-                      <span className="text-border">|</span>
-                      <span>更新於 {agent.lastUpdated}</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+            <div className="rounded-lg border border-border overflow-hidden">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted/30 hover:bg-muted/30">
+                    <TableHead className="text-muted-foreground font-semibold text-xs py-2">用戶</TableHead>
+                    <TableHead className="text-muted-foreground font-semibold text-xs py-2">操作</TableHead>
+                    <TableHead className="text-muted-foreground font-semibold text-xs py-2">分類</TableHead>
+                    <TableHead className="text-muted-foreground font-semibold text-xs py-2">時間</TableHead>
+                    <TableHead className="text-muted-foreground font-semibold text-xs py-2 text-right">狀態</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {recentActivities.map((activity) => (
+                    <TableRow key={activity.id} className="hover:bg-muted/20">
+                      <TableCell className="font-medium text-white text-sm py-2">{activity.user}</TableCell>
+                      <TableCell className="text-muted-foreground text-sm py-2">{activity.action}</TableCell>
+                      <TableCell className="py-2">
+                        <Badge 
+                          variant="outline" 
+                          className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-xs"
+                        >
+                          {activity.category}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-muted-foreground flex items-center gap-2 text-sm py-2">
+                        <Clock size={12} />
+                        {activity.time}
+                      </TableCell>
+                      <TableCell className="text-right py-2">
+                        <Badge 
+                          variant={activity.status === 'completed' ? 'default' : 'secondary'}
+                          className={
+                            activity.status === 'completed' 
+                              ? 'bg-green-500/20 text-green-400 border-green-500/50 text-xs' 
+                              : 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50 text-xs'
+                          }
+                        >
+                          {activity.status === 'completed' ? '已完成' : '處理中'}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
           </CardContent>
         </Card>
@@ -559,6 +486,86 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
           </CardContent>
         </Card>
       </div>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <Link to="/create-agent">
+          <Card className="hover:shadow-lg hover:shadow-purple-500/20 transition-all cursor-pointer border-2 border-dashed border-purple-500/50 bg-gradient-to-br from-purple-500/10 to-purple-600/5">
+            <CardContent className="flex items-center gap-3 p-4">
+              <div 
+                className="rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/50 flex-shrink-0"
+                style={{ width: '40px', height: '40px', minWidth: '40px', minHeight: '40px' }}
+              >
+                <Plus className="text-white" size={20} />
+              </div>
+              <div>
+                <h3 className="text-purple-400 font-semibold text-sm">建立新的 AI 助理</h3>
+                <p className="text-muted-foreground text-xs">上傳知識庫，訓練您專屬的 AI</p>
+              </div>
+              <ChevronRight className="ml-auto text-purple-400" size={18} />
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link to="/connect-community">
+          <Card className="hover:shadow-lg hover:shadow-purple-500/20 transition-all cursor-pointer border-2 border-dashed border-purple-500/50 bg-gradient-to-br from-purple-500/10 to-purple-600/5">
+            <CardContent className="flex items-center gap-3 p-4">
+              <div 
+                className="rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/50 flex-shrink-0"
+                style={{ width: '40px', height: '40px', minWidth: '40px', minHeight: '40px' }}
+              >
+                <Plus className="text-white" size={20} />
+              </div>
+              <div>
+                <h3 className="text-purple-400 font-semibold text-sm">連結新的社群 App</h3>
+                <p className="text-muted-foreground text-xs">將 AI 部署到 LINE、FB 等平台</p>
+              </div>
+              <ChevronRight className="ml-auto text-purple-400" size={18} />
+            </CardContent>
+          </Card>
+        </Link>
+      </div>
+
+      {/* AI Agent List */}
+      <Card className="mb-6 bg-card border-border">
+        <CardHeader className="px-4 pt-4 pb-2">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-white text-sm">AI 助理列表</CardTitle>
+            <Link to="/agents">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-white h-7 text-xs">
+                查看全部 <ChevronRight size={14} />
+              </Button>
+            </Link>
+          </div>
+        </CardHeader>
+        <CardContent className="px-4 pb-4">
+          <div className="space-y-2">
+            {agents.map((agent) => (
+              <Link key={agent.id} to="/agents">
+                <div className="p-3 border border-border rounded-lg hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all cursor-pointer bg-card/50">
+                  <div className="flex items-center justify-between mb-1">
+                    <h4 className="text-white font-medium text-sm">{agent.name}</h4>
+                    <Badge 
+                      variant={agent.status === 'active' ? 'default' : 'secondary'}
+                      className={agent.status === 'active' ? 'bg-green-500/20 text-green-400 border-green-500/50 text-xs' : 'bg-muted text-muted-foreground text-xs'}
+                    >
+                      {agent.status === 'active' ? '啟用中' : '已停用'}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-3 text-muted-foreground text-xs">
+                    <span className="flex items-center gap-1">
+                      <Circle size={6} className={agent.status === 'active' ? 'fill-green-500 text-green-500' : 'fill-gray-500 text-gray-500'} />
+                      <span className="text-white">回覆 <span className="text-purple-400 font-semibold">{agent.replyCount}</span> 次</span>
+                    </span>
+                    <span className="text-border">|</span>
+                    <span>更新於 {agent.lastUpdated}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Data Report Quick Link */}
       <Card className="mt-4 bg-gradient-to-r from-purple-500/20 to-yellow-500/20 border-purple-500/30">

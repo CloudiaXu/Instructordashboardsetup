@@ -153,15 +153,15 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
   );
 
   return (
-    <div className="p-8">
+    <div className="p-8 h-full flex flex-col overflow-hidden">
       {/* Page Header */}
-      <div className="mb-8">
+      <div className="mb-8 flex-shrink-0">
         <h1 className="text-3xl font-bold text-white mb-2">我的知識庫</h1>
         <p className="text-[14px] text-muted-foreground leading-[20px]">管理您的教材、常見問題和筆記，為您的 AI 助理提供知識支持。</p>
       </div>
 
       {/* Search and Action Bar */}
-      <div className="mb-6 flex items-center justify-between gap-4">
+      <div className="mb-6 flex items-center justify-between gap-4 flex-shrink-0">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
           <Input
@@ -361,8 +361,8 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
       </div>
 
       {/* Tabs Section */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="mb-6">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden min-h-0 gap-0">
+        <TabsList className="mb-6 flex-shrink-0">
           <TabsTrigger value="links" className="gap-2">
             <Link2 size={16} />
             連結
@@ -378,9 +378,9 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
         </TabsList>
 
         {/* Links Tab */}
-        <TabsContent value="links">
-          <Card>
-            <CardHeader>
+        <TabsContent value="links" className="flex-1 flex flex-col overflow-hidden min-h-0">
+          <Card className="flex flex-col flex-1 overflow-hidden min-h-0">
+            <CardHeader className="flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>課程與推廣連結</CardTitle>
@@ -397,7 +397,7 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1 overflow-hidden flex flex-col">
               {filteredLinks.length === 0 ? (
                 <div className="text-center py-16 border-2 border-dashed border-gray-200 rounded-lg">
                   <Link2 className="mx-auto mb-4 text-gray-400" size={48} />
@@ -409,57 +409,59 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
                   </Button>
                 </div>
               ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>名稱</TableHead>
-                      <TableHead>類型</TableHead>
-                      <TableHead>有效期限</TableHead>
-                      <TableHead>網址</TableHead>
-                      <TableHead>狀態</TableHead>
-                      <TableHead>操作</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredLinks.map((link, index) => (
-                      <TableRow key={link.id}>
-                        <TableCell>{link.name}</TableCell>
-                        <TableCell>{link.type}</TableCell>
-                        <TableCell>{link.expiration}</TableCell>
-                        <TableCell>
-                          <a href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600 hover:underline">
-                            <ExternalLink size={14} />
-                            連結
-                          </a>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={link.status === '啟用' ? 'default' : 'secondary'}>
-                            {link.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex gap-2">
-                            <Button variant="ghost" size="sm" onClick={() => handleEditLink(link, index)}>
-                              <Edit size={14} />
-                            </Button>
-                            <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDeleteLink(index)}>
-                              <Trash2 size={14} />
-                            </Button>
-                          </div>
-                        </TableCell>
+                <div className="flex-1 overflow-x-auto overflow-y-auto min-h-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>名稱</TableHead>
+                        <TableHead>類型</TableHead>
+                        <TableHead>有效期限</TableHead>
+                        <TableHead>網址</TableHead>
+                        <TableHead>狀態</TableHead>
+                        <TableHead>操作</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredLinks.map((link, index) => (
+                        <TableRow key={link.id}>
+                          <TableCell>{link.name}</TableCell>
+                          <TableCell>{link.type}</TableCell>
+                          <TableCell>{link.expiration}</TableCell>
+                          <TableCell>
+                            <a href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600 hover:underline">
+                              <ExternalLink size={14} />
+                              連結
+                            </a>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant={link.status === '啟用' ? 'default' : 'secondary'}>
+                              {link.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-2">
+                              <Button variant="ghost" size="sm" onClick={() => handleEditLink(link, index)}>
+                                <Edit size={14} />
+                              </Button>
+                              <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDeleteLink(index)}>
+                                <Trash2 size={14} />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               )}
             </CardContent>
           </Card>
         </TabsContent>
 
         {/* Q&A Tab */}
-        <TabsContent value="qas">
-          <Card>
-            <CardHeader>
+        <TabsContent value="qas" className="flex-1 flex flex-col overflow-hidden min-h-0">
+          <Card className="flex flex-col flex-1 overflow-hidden min-h-0">
+            <CardHeader className="flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>固定問答配對</CardTitle>
@@ -477,7 +479,7 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1 overflow-hidden flex flex-col">
               {filteredQas.length === 0 ? (
                 <div className="text-center py-16 border-2 border-dashed border-gray-200 rounded-lg">
                   <MessageCircle className="mx-auto mb-4 text-gray-400" size={48} />
@@ -489,52 +491,54 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
                   </Button>
                 </div>
               ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>問題</TableHead>
-                      <TableHead>答案</TableHead>
-                      <TableHead>分類</TableHead>
-                      <TableHead>可見性</TableHead>
-                      <TableHead>操作</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredQas.map((qa, index) => (
-                      <TableRow key={qa.id}>
-                        <TableCell className="max-w-xs">{qa.question}</TableCell>
-                        <TableCell className="max-w-md text-gray-600">{qa.answer}</TableCell>
-                        <TableCell>
-                          <Badge variant="outline">{qa.category}</Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={qa.visibility === '公開' ? 'default' : 'secondary'}>
-                            {qa.visibility}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex gap-2">
-                            <Button variant="ghost" size="sm" onClick={() => handleEditQa(qa, index)}>
-                              <Edit size={14} />
-                            </Button>
-                            <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDeleteQa(index)}>
-                              <Trash2 size={14} />
-                            </Button>
-                          </div>
-                        </TableCell>
+                <div className="flex-1 overflow-x-auto overflow-y-auto min-h-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>問題</TableHead>
+                        <TableHead>答案</TableHead>
+                        <TableHead>分類</TableHead>
+                        <TableHead>可見性</TableHead>
+                        <TableHead>操作</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredQas.map((qa, index) => (
+                        <TableRow key={qa.id}>
+                          <TableCell className="max-w-xs">{qa.question}</TableCell>
+                          <TableCell className="max-w-md text-gray-600">{qa.answer}</TableCell>
+                          <TableCell>
+                            <Badge variant="outline">{qa.category}</Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant={qa.visibility === '公開' ? 'default' : 'secondary'}>
+                              {qa.visibility}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-2">
+                              <Button variant="ghost" size="sm" onClick={() => handleEditQa(qa, index)}>
+                                <Edit size={14} />
+                              </Button>
+                              <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDeleteQa(index)}>
+                                <Trash2 size={14} />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               )}
             </CardContent>
           </Card>
         </TabsContent>
 
         {/* Text Notes Tab */}
-        <TabsContent value="notes">
-          <Card>
-            <CardHeader>
+        <TabsContent value="notes" className="flex-1 flex flex-col overflow-hidden min-h-0">
+          <Card className="flex flex-col flex-1 overflow-hidden min-h-0">
+            <CardHeader className="flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>教學筆記與風格參考</CardTitle>
@@ -548,7 +552,7 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1 overflow-hidden flex flex-col">
               {filteredNotes.length === 0 ? (
                 <div className="text-center py-16 border-2 border-dashed border-gray-200 rounded-lg">
                   <FileText className="mx-auto mb-4 text-gray-400" size={48} />
@@ -560,43 +564,45 @@ export default function KnowledgeBase({ links, setLinks, qas, setQas, notes, set
                   </Button>
                 </div>
               ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>標題</TableHead>
-                      <TableHead>摘要</TableHead>
-                      <TableHead>最後更新</TableHead>
-                      <TableHead>用於訓練</TableHead>
-                      <TableHead>操作</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredNotes.map((note, index) => (
-                      <TableRow key={note.id}>
-                        <TableCell>{note.title}</TableCell>
-                        <TableCell className="max-w-md text-gray-600">{note.summary}</TableCell>
-                        <TableCell>{note.lastUpdated}</TableCell>
-                        <TableCell>
-                          {note.usedForTraining ? (
-                            <Badge>✅ 是</Badge>
-                          ) : (
-                            <Badge variant="outline">否</Badge>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex gap-2">
-                            <Button variant="ghost" size="sm" onClick={() => handleEditNote(note, index)}>
-                              <Edit size={14} />
-                            </Button>
-                            <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDeleteNote(index)}>
-                              <Trash2 size={14} />
-                            </Button>
-                          </div>
-                        </TableCell>
+                <div className="flex-1 overflow-x-auto overflow-y-auto min-h-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>標題</TableHead>
+                        <TableHead>摘要</TableHead>
+                        <TableHead>最後更新</TableHead>
+                        <TableHead>用於訓練</TableHead>
+                        <TableHead>操作</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredNotes.map((note, index) => (
+                        <TableRow key={note.id}>
+                          <TableCell>{note.title}</TableCell>
+                          <TableCell className="max-w-md text-gray-600">{note.summary}</TableCell>
+                          <TableCell>{note.lastUpdated}</TableCell>
+                          <TableCell>
+                            {note.usedForTraining ? (
+                              <Badge>✅ 是</Badge>
+                            ) : (
+                              <Badge variant="outline">否</Badge>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-2">
+                              <Button variant="ghost" size="sm" onClick={() => handleEditNote(note, index)}>
+                                <Edit size={14} />
+                              </Button>
+                              <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDeleteNote(index)}>
+                                <Trash2 size={14} />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               )}
             </CardContent>
           </Card>
