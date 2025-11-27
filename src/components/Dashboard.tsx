@@ -63,7 +63,8 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
   // Community platform distribution data for pie chart
   const communityPlatformData = communityApps.length > 0
     ? communityApps.map((app, index) => {
-        const colors = ['#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#ef4444'];
+        // Purple gradient colors from dark to light
+        const colors = ['#6d28d9', '#8b5cf6', '#a855f7', '#c084fc', '#9333ea', '#7c3aed'];
         return {
           name: app.platform,
           value: app.replyCount || 0,
@@ -72,9 +73,9 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
       })
     : [
         { name: 'LINE', value: 45, color: '#8b5cf6' },
-        { name: 'Facebook', value: 32, color: '#ec4899' },
-        { name: 'Instagram', value: 28, color: '#f59e0b' },
-        { name: 'Telegram', value: 15, color: '#10b981' },
+        { name: 'Facebook', value: 32, color: '#a855f7' },
+        { name: 'Instagram', value: 28, color: '#c084fc' },
+        { name: 'Telegram', value: 15, color: '#9333ea' },
       ];
 
   // Recent activity data
@@ -88,9 +89,10 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
   ];
 
   return (
-    <div className="p-6">
-      {/* ─ 卡片區 KPI ─────────┐ */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+    <div className="min-h-screen bg-background w-full overflow-x-hidden">
+      <div className="p-6 max-w-full">
+        {/* ─ 卡片區 KPI ─────────┐ */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
         {/* 卡片 1: 總用戶數 (大字) */}
         <Card className="bg-card border-border lg:col-span-1">
           <CardHeader className="flex flex-row items-center justify-between pb-1 px-4 pt-4">
@@ -238,7 +240,7 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
           <CardHeader className="px-4 pt-4 pb-2">
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-white text-sm mb-0.5">用戶成長趨勢</CardTitle>
+                <CardTitle className="text-white text-sm mb-0.5">活躍用戶成長趨勢</CardTitle>
                 <p className="text-muted-foreground text-xs">過去 6 個月的用戶增長情況</p>
               </div>
               <TrendingUp className="text-purple-400" size={20} />
@@ -246,7 +248,18 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
           </CardHeader>
           <CardContent className="px-4 pb-4">
             <ResponsiveContainer width="100%" height={220}>
-              <LineChart data={userGrowthData}>
+              <AreaChart data={userGrowthData}>
+                <defs>
+                  <linearGradient id="userGrowthGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.4}/>
+                    <stop offset="50%" stopColor="#6d28d9" stopOpacity={0.2}/>
+                    <stop offset="100%" stopColor="#1a1a1a" stopOpacity={0.1}/>
+                  </linearGradient>
+                  <linearGradient id="userGrowthLineGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#a855f7"/>
+                    <stop offset="100%" stopColor="#8b5cf6"/>
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis 
                   dataKey="month" 
@@ -260,22 +273,24 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: '#1f2937', 
-                    border: '1px solid #374151',
+                    border: '1px solid #8b5cf6',
                     borderRadius: '8px',
-                    color: '#fff'
+                    color: '#fff',
+                    boxShadow: '0 4px 6px -1px rgba(139, 92, 246, 0.3)'
                   }}
                 />
                 <Legend />
-                <Line 
+                <Area 
                   type="monotone" 
                   dataKey="users" 
-                  stroke="#8b5cf6" 
+                  stroke="url(#userGrowthLineGradient)"
                   strokeWidth={3}
-                  dot={{ fill: '#8b5cf6', r: 5 }}
-                  activeDot={{ r: 7 }}
+                  fill="url(#userGrowthGradient)"
+                  dot={{ fill: '#8b5cf6', r: 5, strokeWidth: 2, stroke: '#1a1a1a' }}
+                  activeDot={{ r: 7, fill: '#a855f7', strokeWidth: 2, stroke: '#fff' }}
                   name="用戶數"
                 />
-              </LineChart>
+              </AreaChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
@@ -294,18 +309,31 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
           <CardContent className="px-4 pb-4">
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={categoryBarData} layout="vertical">
+                <defs>
+                  <linearGradient id="categoryBarGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#a855f7" stopOpacity={0.9}/>
+                    <stop offset="50%" stopColor="#8b5cf6" stopOpacity={0.8}/>
+                    <stop offset="100%" stopColor="#6d28d9" stopOpacity={0.7}/>
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis type="number" stroke="#9ca3af" style={{ fontSize: '12px' }} />
                 <YAxis dataKey="category" type="category" stroke="#9ca3af" style={{ fontSize: '12px' }} width={100} />
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: '#1f2937', 
-                    border: '1px solid #374151',
+                    border: '1px solid #8b5cf6',
                     borderRadius: '8px',
-                    color: '#fff'
+                    color: '#fff',
+                    boxShadow: '0 4px 6px -1px rgba(139, 92, 246, 0.3)'
                   }}
                 />
-                <Bar dataKey="count" fill="#8b5cf6" radius={[0, 8, 8, 0]} />
+                <Bar 
+                  dataKey="count" 
+                  fill="url(#categoryBarGradient)" 
+                  radius={[0, 8, 8, 0]}
+                  style={{ filter: 'drop-shadow(0 2px 4px rgba(139, 92, 246, 0.3))' }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -473,7 +501,7 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
                     labelLine={false}
                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                     outerRadius={70}
-                    fill="#8884d8"
+                    fill="#8b5cf6"
                     dataKey="value"
                   >
                     {communityPlatformData.map((entry, index) => (
@@ -483,10 +511,11 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
                   <Tooltip 
                     contentStyle={{ 
                       backgroundColor: '#1f2937', 
-                      border: '1px solid #374151',
+                      border: '1px solid #8b5cf6',
                       borderRadius: '8px',
                       color: '#fff',
-                      fontSize: '12px'
+                      fontSize: '12px',
+                      boxShadow: '0 4px 6px -1px rgba(139, 92, 246, 0.3)'
                     }}
                   />
                   <Legend 
@@ -547,6 +576,7 @@ export default function Dashboard({ agents, communityApps, updateCommunityApp })
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

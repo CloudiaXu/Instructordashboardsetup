@@ -155,10 +155,10 @@ export default function App() {
   };
 
   return (
-    <Router>
-      <div className="flex min-h-screen dark bg-background">
+    <Router basename="/Instructordashboardsetup">
+      <div className="flex h-screen dark bg-background overflow-hidden">
         <Sidebar />
-        <div className="flex-1 ml-64">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden h-screen">
           <Routes>
             <Route 
               path="/" 
@@ -228,7 +228,7 @@ export default function App() {
             <Route path="/community-inbox" element={<CommunityInbox />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </div>
+        </main>
       </div>
     </Router>
   );
